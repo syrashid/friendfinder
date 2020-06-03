@@ -4,8 +4,15 @@ class FriendsController < ApplicationController
   # GET /friends
   # GET /friends.json
   def index
-    @friends = Friend.all
-  end
+        @friends = Friend.geocoded
+
+        @markers = @friends.map do |friend|
+          {
+            lat: friend.latitude,
+            lng: friend.longitude
+          }
+        end
+      end
 
   # GET /friends/1
   # GET /friends/1.json
@@ -71,4 +78,4 @@ class FriendsController < ApplicationController
     def friend_params
       params.require(:friend).permit(:name, :address)
     end
-end
+  end
